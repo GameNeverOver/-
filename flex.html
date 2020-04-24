@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* #box{
+            height: 600px;
+            background: #00f;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .item{
+            width: 100%;
+            background: #f0f;
+            display: flex;
+        }
+        span{
+            flex-grow: 1;
+            height: 100%;
+        } */
+        #box {
+            height: 300px;
+            display:flex;
+            flex-flow:column wrap
+        }
+        .item{
+            display:flex;
+            flex:1
+        }
+        span{
+            display:flex;
+            flex:1
+        }
+    </style>
+</head>
+<body>
+    <div id='box'>
+        <div class="item">
+            <span>11</span>
+            <span>22</span>
+            <span>33</span>
+        </div>
+        <div class="item">
+            <span>44</span>
+            <span>55</span>
+            <span>66</span>
+        </div>
+        <div class="item">
+            <span>77</span>
+            <span>88</span>
+            <span>99</span>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 对 var let const 的了解
+    {
+        // const a = 1;
+        // const a = 2;
+        // // 报错  a 已经被声明了
+
+        // const a = 1;
+        // a = 2;
+        // // 报错  不能给常量赋值
+
+        // const a = [];
+        // a.push(1);
+        // // 可行
+
+        // const obj = {a: 1};
+        // obj.a = 123;
+        // // 可行
+
+        // const a = {};
+        // a = [];
+        // // 报错 不能赋值给常量
+
+        // 个人总结：const声明的变量 如果是基本类型 则不能去修改；引用类型的同样也是，但是可以添加key value
+    }
+    // 手写promise
+    {
+        function Promise2(executor){        
+            let _this = this;
+            this.state = 'pending';
+            this.value = undefined;
+            this.reason = undefined;
+            this.abbbb = [];
+            this.onRejectedFunc = [];
+            executor(resolve, reject)
+            function resolve(value){
+                if (_this.state === 'pending') {
+                    _this.value = value;
+                    _this.abbbb.forEach(fn => fn(value));
+                    _this.state = 'resolved'
+                }
+            }
+            function reject(reason){
+                if(_this.state === 'pending') {
+                    _this.reason = reason;
+                    _this.onRejectedFunc.forEach(fn => fn(reason));
+                    _this.state = 'rejected';
+                }
+            }
+        }
+        Promise2.prototype.then = function (onF, onRejected) {
+            if (this.state === 'pending') {
+                if (typeof onF === 'function') {
+                    this.abbbb.push(onF);//保存回调
+                }
+                if (typeof onRejected === 'function') {
+                    this.onRejectedFunc.push(onRejected);//保存回调
+                }
+            }
+            if (this.state === 'resolved') {
+                if (typeof onF === 'function') {
+                    onF(this.value)
+                }
+            }
+            if (this.state === 'rejected') {
+                if (typeof onRejected === 'function') {
+                    onRejected(this.reason)
+                }
+            }
+        }
+
+        let p = new Promise2((res,rej) => {
+            setTimeout(() => {
+                res(1)
+            },1000)
+        })
+        p.then(res => console.log(res,132))
+    }
+    
+    
+    // 对 virtual dom 的理解
+    {
+        {
+            /* 
+                本质上，VD是简单的js对象，至少包含了标签名（tag）、属性（props）和子元素对象（children）
+                {
+                    tag: "div",
+                    props: {},
+                    children: [
+                        "Hello World",
+                        {
+                            tag: "ul",
+                            props: {},
+                            children: [{
+                                tag: "li",
+                                props: {
+                                    id: 1,
+                                    class: "li-1"
+                                },
+                                children: ["第", 1]
+                            }]
+
+                        }
+                    ]
+                }
+                上面的vd对象对应下方dom元素
+                <div>
+                    Hello World
+                    <ul>
+                        <li id="1" class="li-1">
+                            第1
+                        </li>
+                    </ul>
+                </div>
+
+                JS计算
+                生成渲染树
+                绘制页面 
+
+
+                为什么需要VD？
+                借助VD，可以达到有效减少页面渲染次数的目的，从而提高渲染效率
+                可以将多个操作合并成一个批量的操作，从而减少dom重排的次数，进而缩短了生成渲染树和绘制所花的时间
+                function render() {
+
+                return (
+                    <div>
+                        Hello World
+                        <ul>
+                            <li id="1" class="li-1">
+                                第1
+                            </li>
+                        </ul>
+                    </div>
+                );
+
+                function render() {
+
+                return h(
+                    'div',
+                    null,
+                    'Hello World',
+                    h(
+                        'ul',
+                        null,
+                        h(
+                            'li',
+                            { id: '1', 'class': 'li-1' },
+                            '\u7B2C1'
+                        )
+                )
+
+                https://blog.csdn.net/VhWfR2u02Q/article/details/83052717
+            */  
+        }
+    }
+
+
+</script>
+</html>

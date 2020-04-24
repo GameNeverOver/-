@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .outBox{
+            /* border: 1px solid #00f; */
+            width: 200px;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+     
+        .inBox{
+            position: absolute;
+            /* border: 1px solid #000; */
+            width: 1000px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            left: 0;
+        }
+        span{
+            flex: 1;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="outBox">
+        <div class="inBox">
+            <span>1111</span>
+            <span>2222</span>
+            <span>3333</span>
+            <span>4444</span>
+            <span>1111</span>
+        </div>
+    </div>
+</body>
+<script>
+    // let inBox = document.querySelector('.inBox') ;
+    // let allSpan = document.getElementsByTagName('span');
+    // let x = 0;
+    // setInterval(()=>{
+    //     if(x == 800){
+    //         x = 0;
+    //     }
+    //     x += 200;
+    //     inBox.style.left = -x + 'px'
+    //     inBox.style.transition = 'all 1s linear 0s';
+    //     if(x == 800){
+    //         setTimeout(() => {
+    //             inBox.style.left = 0 + 'px'
+    //             inBox.style.transition = 'none';
+    //         }, 1000);
+    //     }
+    // }, 3000)
+    function Promise(executor){
+            let _this = this;
+            this.state = 'pending';
+            this.value = undefined;
+            this.reason = undefined;
+            this.onFulFilledFunc = [];
+            this.onRejectedFunc = [];
+            executor(resolve, reject)
+            function resolve(value){
+                if (_this.state === 'pending') {
+                    _this.value = value;
+                    console.log(_this.state)
+                    console.log(_this.value)
+                    console.log(_this.reason)
+                    console.log(_this.onFulFilledFunc)
+                    _this.onFulfilledFunc.forEach(fn => fn(value));
+                    _this.state = 'resolved'
+                }
+            }
+            function reject(reason){
+                if(_this.state === 'pending') {
+                    _this.reason = reason;
+                    _this.onRejectedFunc.forEach(fn => fn(reason));
+                    _this.state = 'rejected';
+                }
+            }
+        }
+        Promise.prototype.then = function (onFulFilled, onRejected) {
+            if (this.state === 'pending') {
+                if (typeof onFulfilled === 'function') {
+                    console.log(2)
+                    this.onFulfilledFunc.push(onFulfilled);//保存回调
+                }
+                if (typeof onRejected === 'function') {
+                    this.onRejectedFunc.push(onRejected);//保存回调
+                }
+            }
+            if (this.state === 'resolved') {
+                if (typeof onfulFilled === 'function') {
+                    onFulFilled(this.value)
+                }
+            }
+            if (this.state === 'rejected') {
+                if (typeof onRejected === 'function') {
+                    onRejected(this.reason)
+                }
+            }
+        }
+
+        let p = new Promise((res,rej) => {
+            setTimeout(() => {
+                res(1)
+            },10)
+        })
+        p.then(res => console.log(res,132))
+</script>
+</html>
