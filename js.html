@@ -35,59 +35,86 @@
     }
     // 手写promise
     {
-        function Promise2(executor){        
-            let _this = this;
-            this.state = 'pending';
-            this.value = undefined;
-            this.reason = undefined;
-            this.abbbb = [];
-            this.onRejectedFunc = [];
-            executor(resolve, reject)
-            function resolve(value){
-                if (_this.state === 'pending') {
-                    _this.value = value;
-                    _this.abbbb.forEach(fn => fn(value));
-                    _this.state = 'resolved'
-                }
-            }
-            function reject(reason){
-                if(_this.state === 'pending') {
-                    _this.reason = reason;
-                    _this.onRejectedFunc.forEach(fn => fn(reason));
-                    _this.state = 'rejected';
-                }
-            }
-        }
-        Promise2.prototype.then = function (onF, onRejected) {
-            if (this.state === 'pending') {
-                if (typeof onF === 'function') {
-                    this.abbbb.push(onF);//保存回调
-                }
-                if (typeof onRejected === 'function') {
-                    this.onRejectedFunc.push(onRejected);//保存回调
-                }
-            }
-            if (this.state === 'resolved') {
-                if (typeof onF === 'function') {
-                    onF(this.value)
-                }
-            }
-            if (this.state === 'rejected') {
-                if (typeof onRejected === 'function') {
-                    onRejected(this.reason)
-                }
-            }
-        }
+        // function Promise2(executor){        
+        //     let _this = this;
+        //     this.state = 'pending';
+        //     this.value = undefined;
+        //     this.reason = undefined;
+        //     this.secessF = [];
+        //     this.errorF = [];
+        //     executor(resolve, reject)
+        //     function resolve(value){
+        //         if (_this.state === 'pending') {
+        //             _this.value = value;
+        //             _this.secessF.forEach(fn => fn(value));
+        //             _this.state = 'resolved'
+        //         }
+        //     }
+        //     function reject(reason){
+        //         if(_this.state === 'pending') {
+        //             _this.reason = reason;
+        //             _this.errorF.forEach(fn => fn(reason));
+        //             _this.state = 'rejected';
+        //         }
+        //     }
+        // }
+        // Promise2.prototype.then = function (onF, onRejected) {
+        //     if (this.state === 'pending') {
+        //         if (typeof onF === 'function') {
+        //             this.secessF.push(onF);//保存回调
+        //         }
+        //         if (typeof onRejected === 'function') {
+        //             this.errorF.push(onRejected);//保存回调
+        //         }
+        //     }
+        //     if (this.state === 'resolved') {
+        //         if (typeof onF === 'function') {
+        //             onF(this.value)
+        //         }
+        //     }
+        //     if (this.state === 'rejected') {
+        //         if (typeof onRejected === 'function') {
+        //             onRejected(this.reason)
+        //         }
+        //     }
+        // }
 
-        let p = new Promise2((res,rej) => {
-            setTimeout(() => {
-                res(1)
-            },1000)
-        })
-        p.then(res => console.log(res,132))
+        // let p = new Promise((res,rej) => {
+        //     setTimeout(() => {
+        //         res(a)
+        //     },1000)
+        // })
+        // let pp = p.then(data => {
+        //     console.log(data,132)
+        //     // return new Promise(res=>{
+                
+        //     // })
+        // })
+        // console.log( pp ,'x')
     }
-    
-    
+    // 深拷贝
+    {
+        function deepCopy(src){
+            const type = Object.prototype.toString(src);
+            if (type === '[object Array]' || type === '[object Object]') {
+                let constructor = src.constructor;
+                const data = new constructor();
+                for (let key in src) {
+                    data[key] = deepCopy(src[key])
+                }
+                return data
+            } else {
+                return src
+            }
+        }
+        let obj = {
+            a: 1
+        }
+        let obj2 = deepCopy(obj);
+        obj2.a = 33;
+        console.log(obj,obj2)
+    }
+        
     // 对 virtual dom 的理解
     {
         {
