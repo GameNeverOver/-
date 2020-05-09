@@ -9,6 +9,24 @@
     
 </body>
 <script>
+    // 一个页面从输入URL 到页面加载显示完成的过程中都发生了什么
+    {
+        // 浏览器根据请求的URL交给DNS（域名系统）域名解析，找到真实IP，向服务器发起请求；
+        // 服务器交给后台处理完成后返回数据，浏览器接收文件（HTML、JS、CSS、图象等）；
+        // 浏览器对加载到的资源（HTML、JS、CSS等）进行语法解析，建立相应的内部数据结构（如HTML的DOM）；
+        // 载入解析到的资源文件，渲染页面，完成。
+
+        // 抽象点DNS就是 一个记录ip地址的超级分布式数据库 https://www.jianshu.com/p/d9a072e1804c
+    }
+    // window.onload 和 document.queryselector('dom').onload 的特点及区 别
+    {
+        // window.onload 事件常用来检测访问者的浏览器类型和版本，然百后根据这些信息载入特定版本的网页,
+        // 常被用来处理用户进入或离开页面时所建立的 cookies。
+
+        // document.queryselector('dom').onload 是绑定在具体元素上的事件 如img
+
+        // document.queryselector('dom').onload 先于 window.onload 执行
+    }
     // 对 var let const 的了解
     {
         // const a = 1;
@@ -81,7 +99,7 @@
 
         // let p = new Promise((res,rej) => {
         //     setTimeout(() => {
-        //         res(a)
+        //         res('a')
         //     },1000)
         // })
         // let pp = p.then(data => {
@@ -89,32 +107,33 @@
         //     // return new Promise(res=>{
                 
         //     // })
+        // },()=>{
+        //     console.log('err')
         // })
         // console.log( pp ,'x')
     }
     // 深拷贝
     {
-        function deepCopy(src){
-            const type = Object.prototype.toString(src);
-            if (type === '[object Array]' || type === '[object Object]') {
-                let constructor = src.constructor;
-                const data = new constructor();
-                for (let key in src) {
-                    data[key] = deepCopy(src[key])
-                }
-                return data
-            } else {
-                return src
-            }
-        }
-        let obj = {
-            a: 1
-        }
-        let obj2 = deepCopy(obj);
-        obj2.a = 33;
-        console.log(obj,obj2)
+        // function deepCopy(src){
+        //     const type = Object.prototype.toString(src);
+        //     if (type === '[object Array]' || type === '[object Object]') {
+        //         let constructor = src.constructor;
+        //         const data = new constructor();
+        //         for (let key in src) {
+        //             data[key] = deepCopy(src[key])
+        //         }
+        //         return data
+        //     } else {
+        //         return src
+        //     }
+        // }
+        // let obj = {
+        //     a: 1
+        // }
+        // let obj2 = deepCopy(obj);
+        // obj2.a = 33;
+        // console.log(obj,obj2)
     }
-        
     // 对 virtual dom 的理解
     {
         {
@@ -191,7 +210,65 @@
             */  
         }
     }
+    // 封装 arr 的 splice
+    {
+    //     Array.prototype.splice2 = function(idx,num){
+    //         if(!num && num!==0 ) num = this.length-idx ;
+    //         if(idx<0) idx = this.length +idx ;
 
+    //         const arg = [].slice.call(arguments,2) ; // 新添加的
+    //         let beforeArr = [] ;
+    //         let afterArr = [] ;
+    //         let delArr = [] ;
 
+    //         this.forEach((item,index)=>{
+    //             if( index < idx ) {
+    //                 beforeArr.push(item ) ;
+    //             }else if( index>= (idx+num)) {
+    //                 afterArr.push(item ) ;
+    //             } else {
+    //                 delArr.push(item)
+    //             }
+    //         })
+    //         this.length = 0;
+    //         let nowArr = [...beforeArr,...arg,...afterArr] ;
+    //         nowArr.forEach((item,index)=>{
+    //             this[index] = item ;
+    //         })
+    //         console.log('截取的' , delArr ) ;
+    //         console.log('现在' , this) ;
+    //     }
+    //     {
+    //         let arr2 = [1,2,3] ;
+    //         console.log('截取',arr2.splice(1,1,'kk','oo', [1])) ;
+    //         console.log('现在',arr2)
+    //     }
+    }
+    
+    {
+        // let str = new String('12')
+        // console.log(str.length)
+        // var a = new Boolean(0);
+        // var aa = new Object({a: 123});
+        // // if(a){
+        // //     console.log('-')
+        // // // }
+        // // console.log(typeof aa)
+        // // console.log(  a.valueOf())
+        // console.log(a.valueOf())
+        // console.log(a.valueOf())
+        setTimeout(() => {
+            console.log(3)
+        })
+        let p = new Promise( res => {
+            console.log(1)
+            res(2)
+        })
+        p.then(res => {
+            console.log('xx')
+        })
+        // macro-task大概包括：script(整体代码), setTimeout, setInterval, setImmediate, I/O, UI rendering。
+        // •micro-task大概包括: process.nextTick, Promise, Object.observe(已废弃), MutationObserver(html5新特性)
+    }
 </script>
 </html>

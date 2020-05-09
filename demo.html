@@ -20,4 +20,115 @@
     <body>
         <div><p>点击发生变化</p></div>
     </body>
+    <script>
+        // const promise1 = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve('success')
+        //     }, 1000)
+        // })
+        // const promise2 = promise1.then(() => {
+        //     throw new Error('error!!!')
+        // })
+
+        // console.log('promise1', promise1)
+        // console.log('promise2', promise2)
+
+        // setTimeout(() => {
+        //     console.log('promise1', promise1)
+        //     console.log('promise2', promise2)
+        // }, 2000)
+        // // promise1 ... promise2 ...   error  success  promise1 ... promise2 ...
+        // Promise.resolve(1)
+        // .then((res) => {
+        //     console.log(res)
+        //     return 2
+        // })
+        // .catch((err) => {
+        //     return 3
+        // })
+        // .then((res) => {
+        //     console.log(res,1)
+        // })
+        // Promise.resolve()
+        // .then(() => {
+        //     throw new Error('error!!!')
+        // })
+        // .then((res) => {
+        //     console.log('then: ', res)
+        // })
+        // .catch((err) => {
+        //     console.log('catch: ', err)
+        // })
+        // Promise.resolve()
+        // .then(function success (res) {
+        //     throw new Error('error')
+        // }, function fail1 (e) {
+        //     console.error('fail1: ', e)
+        // })
+        // .catch(function fail2 (e) {
+        //     console.error('fail2: ', e)
+        // })
+        // var promise1 = Promise.resolve(3);
+        // var promise3 = new Promise(function(resolve, reject) {
+        //     setTimeout(() => {
+        //         resolve(100)
+        //     }, 1001);
+        // });
+
+        // let aa = Promise.all([promise1, promise3]).then(    function(values) {
+        //     setTimeout((values)=>{
+        //         resolve(values)
+        //     })
+        //     // Promise
+        //     // console.log(values);
+        // });
+        // console.log(aa)
+
+        let arr = [1,2,3,4];
+        // let arr2 = arr.slice(2,3);
+        Array.prototype.splice2 = function (){
+            let lsArr = [], start = arguments[0], end = arguments[1];
+            if (!arguments[1]) end = this.length - start; 
+            if ((start + end) > this.length) end = this.length - start;
+            for (let i = start; i < (start + end); i++) {
+                lsArr.push(this[i])
+            }
+
+            let _this = JSON.parse(JSON.stringify(this));
+            this.length = 0;
+            let a = [];
+            let aa = [];
+            console.log(start,end)
+            let j = 0;
+            let jj = 0;
+            for(let i = 0; i < _this.length; i++){
+                if (start > i) {
+                    a[j] = _this[i]
+                    j++;
+                } else if (start + end <= i) {
+                    aa[jj] = _this[i]
+                    jj++;
+                } 
+            }
+            console.log(a ,aa)
+            this.push(...a,arguments[2],...aa)
+
+
+
+            return lsArr
+            // if (!arguments[1]) {
+            //     lsArr = this.slice(arguments[0])
+            // }
+            // lsArr = this.slice(arguments[0], arguments[0] + arguments[1])
+
+            // this.length = 0;
+            // lsArr.forEach(item => {
+            //     this.push(item)
+            // })
+            // console.log(this,lsArr)
+        }
+        // console.log(arr,arr2)
+        let arr2 = arr.splice2(1,1,'000')
+        console.log(arr,arr2)
+    </script>
 </html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // function deepCopy(src){
+    //     const type = Object.prototype.toString.call(src);
+    //     if (type === '[object Object]' || type === '[object Array]') {
+    //         const constructor = src.constructor;
+    //         let copyData = new constructor();
+    //         for (let key in src) {
+    //             copyData[key] = deepCopy(src[key])
+    //         }
+    //         return copyData
+    //     } else {
+    //         return src
+    //     }
+    // }
+    // let obj = {
+    //     a: 1,
+    //     b: [1,2,3],
+    //     c: {
+    //         c:2
+    //     },
+    //     f: function(){
+    //         console.log(4)
+    //     }
+    // }
+    // let obj2 = deepCopy(obj);
+    // obj.a = null;
+    // obj.f = 'fun';
+    // obj2.c.c = 'ppo';
+    // console.log(obj2,obj,'x0')
+    // --
+    // let p = new Promise((res,rej)=>{
+    //     setTimeout(() => {
+    //         rej({
+    //             code: 200,
+    //             data: [1,2,3]
+    //         })
+    //     }, 1000)
+    // })
+    // console.log(p)
+    // p.then((data)=>{
+    //     console.log(data,'xx.')
+    // },(err)=>{
+    //     console.log('err' + err)
+    // })
+    function Promise2(stateFun){
+        this.state = 'pending';
+        this.sValue = undefined;
+        this.eValue = undefined;
+        this.sFunArr = [];
+        this.eFunArr = [];
+
+        stateFun(res,rej)
+        let _this = this;
+        function res(val){
+            console.log(9)
+            if(_this.state === 'pending'){
+                _this.sValue = val;
+                _this.sFunArr.forEach(fun => fun(val))
+                _this.state = 'resolved';
+            }
+        }
+        function rej(val){
+            if(_this.state === 'pending'){
+                _this.eValue = val;
+                _this.eFunArr.forEach(fun => fun(val))
+                _this.state = 'rejected';
+            }
+        }
+    }
+    Promise2.prototype.then = function(sFun,eFun){
+        if (this.state === 'pending'){
+            this.sFunArr.push(sFun)
+            this.eFunArr.push(eFun)
+        }
+        if (this.state === 'resolved'){
+            sFun(this.sValue)
+        }
+        if (this.state === 'rejected'){
+            eFun(this.eValue)
+        }
+    }
+    let pp = new Promise2((res,rej) => {
+        setTimeout(() => {
+            rej({
+                code: '200',
+                msg: 'xx--'
+            })
+        }, 1000)
+    })
+
+    pp.then(res => {
+        console.log(res,'xx,')
+    }, rej => {
+        console.log(rej,'err,')
+    })
+</script>
+</html>

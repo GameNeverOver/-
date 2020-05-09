@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea id = 'c'>
+        a阿斯达是的阿斯达看你的了看到了的阿达
+    </textarea>
+    <b id='copy'>
+        点击copy
+    </b>
+    <BR />
+    <BR />
+    <BR />
+    <BR />
+    <textarea cols="20" rows="10" id="biao1">用户定义的代码区域</textarea>
+    <input type="button" onClick="copyUrl2()" value="点击复制代码" />
+</body>
+<script>
+    var o = {};
+    var a = {
+        b: 42,
+        c: 0,
+        f: () => {}
+    }
+    o.e = a;
+    console.log(JSON.stringify(a));
+    a.toJSON = function() {     
+        // 序列化仅包含b     
+        console.log(this)
+        return { b: this.b }; 
+    }; 
+    console.log(JSON.stringify(a)); // "{"b":42}
+
+    // clickCopy.oncopy = (e) => {
+    //     console.log('123',e)
+    // }
+    // clickCopy2.onclick = () => {
+    //     clickCopy.oncopy()
+    // }
+    // function copyUrl2(){
+    //     var Url2=document.getElementById("c");
+    //     Url2.select(); // 选择对象
+    //     document.execCommand("Copy"); // 执行浏览器复制命令
+    //     alert("已复制好，可贴粘。");
+    // }
+    // AA()
+    // var a = new Array(3);
+    // var b = [undefined, undefined, undefined];
+    // delete b[1];
+    // var c = [];
+    // c.length = 3;
+    // // console.log(a,b,c)
+    // // eval('console.log(998)')
+
+    // var mysym = Symbol( "my own symbol" ); 
+    // var mysym2 = Symbol( "my own symbol" ); 
+    // console.log(mysym == mysym2)
+    // console.log(mysym);  
+    // console.log(mysym.toString());   
+    // "Symbol(my own symbol)" typeof mysym;      
+    // "symbol"
+    // var a = { }; 
+    // a[mysym] = "foobar"; 
+    // a[mysym2] = "foobar2"; 
+    // a.a = 123;
+    // console.log(Object.getOwnPropertySymbols( a )); // [ Symbol(my own symbol) ]
+    // console.log(a[mysym],a[mysym2])
+    // let obj = {};
+    // let name1 = Symbol.for('name'); //检测到未创建后新建
+    // let name2 = Symbol.for('name'); //检测到已创建后返回
+    // obj[name1] = '1';
+    // obj[name2] = '2';
+    // console.log(obj[name1],obj[name2]); // true
+    // typeof Function.prototype;          // "function" 
+    // Function.prototype();               // 空函数！
+    // RegExp.prototype.toString();        // "/(?:)/"——空正则表达式
+    // console.log(RegExp.prototype,'xx')
+    // "abc".match( {a:1});    // [""]
+    // function isThisCool(vals,fn,rx) {     
+    //     vals = vals || Array.prototype;     
+    //     fn = fn || Function.prototype;     
+    //     rx = rx || RegExp.prototype;     
+    //     return rx.test(         
+    //         vals.map( fn ).join( "" )     
+    //     );  
+    // } 
+    // // isThisCool();       // true
+    // console.log(isThisCool(     
+    //     ["a","b","c"],     
+    //     function(v){ return v.toUpperCase(); },     
+    //     /D/ 
+    // )     )             // false
+    // function fun(a=1){
+    //     console.log(a)
+    // }
+    // fun(111)
+    // let clickCopy = document.getElementById('c');
+    // let clickCopy2 = document.getElementById('copy');
+    // clickCopy.addEventListener('click',copyFun,true);
+    // function copyFun(){
+    //     console.log(9)
+    // }
+ 
+    // window. 
+    // document 
+
+    // window.addEventListener('paste',copyFun,true);
+    // function copyFun(e){
+    //     console.log(9,e)
+    // }
+</script>
+</html>

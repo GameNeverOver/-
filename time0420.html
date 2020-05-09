@@ -39,6 +39,7 @@
             <span>1111</span>
         </div>
     </div>
+    <img src="http://img5.imgtn.bdimg.com/it/u=1229616659,2735492520&fm=26&gp=0.jpg" id='img'/>
 </body>
 <script>
     // let inBox = document.querySelector('.inBox') ;
@@ -160,11 +161,110 @@
     // },arr2)
 
     // console.log(arr2,'x')
-    document.onload = () => {
-        console.log(333)
-    }
+    // console.log
     // window.onload = () => {
-    //     console.log(123)
+    //     console.log(11)
     // }
+    // document.querySelector('#img').onload = () => {
+    //     console.log(333)
+    // }
+    // function deepCopy(src){
+    //     const type = Object.prototype.toString.call(src);
+    //     if (type === '[object Object]' || type === '[object Array]') {
+    //         const constructor = src.constructor;
+    //         let data = new constructor();
+    //         for(let key in src){
+    //             data[key] = deepCopy(src[key])
+    //         } 
+    //         return data
+    //     } else {
+    //         return src
+    //     }
+    // }
+    // let obj = {a: 1};
+    // let obj2 = deepCopy(obj);
+    // obj.a = 33;
+    // console.log(obj,obj2)
+    
+
+    // let src = 'aacbd';
+    // console.log(src.replace(/b/g,'').replace(/(ac)/,''),'x')
+
+    // let aa = 'aabcd' //-> aacd -> ad -> 'ad'
+    // console.log(aa.replace(/b/g,'').replace(/(ac)/,''),'x')
+
+    // let aa = 'aaabbccc' // -> aaaccc -> aacc -> ac -> ''
+    // console.log(aa.replace(/b/g,'').replace(/(ac)/,'').replace(/(ac)/,''),'x')
+
+    // function bacReg(str){
+    //     const reg = /(ac)/g;
+    //     let data = 'ac'.replace(/b/g,'').replace(/(ac)/g,'');
+    //     return reg.test(data) ? bacReg(str) : data ;
+    // }
+
+    // console.log( bacReg('aaabbccc'),'xx')
+    // let p = new Promise((res,rej) => {
+    //     fetch(
+    //         'https://douban.uieee.com/v2/movie/top250'
+    //     ).then(
+    //         res => res.json()
+    //     ).then(
+    //         data => res(data)
+    //     )
+    // })
+    // p.then((data)=>{
+    //     console.log(data)
+    // })
+
+    function Promise2(perform){
+        this.state = 'pending';
+        this.secessValue = undefined;
+        this.errorValue = undefined;
+        this.secessFun = [];
+        this.errorFun = [];
+        
+        let _this = this;
+        perform(res,rej)
+        function res(val){
+            if (_this.state === 'pending' && typeof res === 'function') { 
+                _this.secessValue = val;
+                _this.secessFun.forEach(fun => fun(val));
+                _this.state = 'resolved'
+            }
+        }
+        function rej(val){
+            if (_this.state === 'pending' && typeof rej === 'function') { 
+                _this.errorValue = val;
+                _this.errorFun.forEach(fun => fun(val));
+                _this.state = 'rejected'
+            }
+        }
+    }
+    Promise2.prototype.then = function(secessF,errorF){
+        if(this.state === 'pending'){
+            this.secessFun.push(secessF)
+            this.errorFun.push(errorF)
+        }
+        if (this.state === 'resolved') {
+            secessF(this.secessValue)
+        }
+        if (this.state === 'rejected') {
+            secessF(this.errorValue)
+        }
+    }
+    let p = new Promise2((res,rej) => {
+        fetch(
+            'https://douban.uieee.com/v2/movie/top250'
+        ).then(
+            res => res.json()
+        ).then(
+            data => res(data)
+        )
+    })
+    p.then((data)=>{
+        console.log(data)
+    },()=>{
+        console.log('x')
+    })
 </script>
 </html>

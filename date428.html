@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="uploadFile" type="file" name="file" accept="image/png,image/gif" />
+
+</body>
+<script>
+    // let promise = new Promise((resolve,reject) => {
+    //     setTimeout(() => {
+    //         resolve({
+    //             code: 200,
+    //             data: {
+    //                 msg: '新闻联播'
+    //             }
+    //         })
+    //     }, 1000)
+    // })
+
+    // promise.then((data) => {
+    //     console.log(data,'x')
+    // }).catch((err)=>{
+    //     console.log(err)
+    // })
+
+    function Promise2 (funContainer) {
+        this.sucessValue = undefined;
+        this.errorValue = undefined;
+        this.sucessFun = [];
+        this.errorFun = [];
+        this.state = 'pending';
+        let _this = this;
+        funContainer(funResolve,funReject)
+        function funResolve(val){
+            if (_this.state === 'pending' )
+            _this.sucessValue = val;
+            _this.sucessFun.forEach(item => item(val))
+            _this.state = 'resovled';
+        }
+        function funReject(val){
+            if (_this.state === 'pending' )
+            _this.errorValue = val;
+            _this.errorFun.forEach(item => item(val))
+            _this.state = 'rejected';
+        }
+    }
+    Promise2.prototype.then = function(sucFun,errFun){
+        if (this.state === 'pending') {
+            if (typeof sucFun === 'function'){
+                this.sucessFun.push(sucFun)
+            }
+            if (typeof errFun === 'function'){
+                this.errorFun.push(sucFun)
+            }
+        }
+        if (this.state === 'resovled' && typeof sucFun === 'function') {
+            sucFun(this.sucessValue)
+        }
+        if (this.state === 'rejected' && typeof errFun === 'function') {
+            sucFun(this.errorValue)
+        }
+    }
+
+    let promise = new Promise2((resolve,reject) => {
+        setTimeout(() => {
+            reject({
+                code: 200,
+                data: {
+                    msg: '新闻联播'
+                }
+            })
+        }, 1000)
+    })
+
+    promise.then((data) => {
+        console.log(data,'x')
+    },(err)=>{
+        console.log(err)
+    })
+
+    // var a = 2 / 'foo';
+    // var b = 'foo';
+    // console.log(Number.isNaN(a))
+    // console.log(Number.isNaN('asdas'))
+    // var arr = [NaN];
+    // console.log(arr.includes(NaN))
+    // function fun(x){
+    //     x.push(4)
+    //     x = [3]
+    // }
+    // let arr = [1,2,3];
+    // fun(arr);
+    // console.log(arr.slice())
+    // let arr = [1,2,3,4,5];
+    // arr.splice(1,1)
+    // arr.length = 5;
+    // console.log(arr.length,arr)
+    // function deepCopy(src){
+    //     const type = Object.prototype.toString.call(src);
+    //     if (type === '[object Object]' || type === '[object Array]') {
+    //         const constructor = src.constructor;
+    //         let data = new constructor();
+    //         for(let key in src){
+    //             data[key] = deepCopy(src[key])
+    //         }
+    //         return data
+    //     } else {
+    //         return src
+    //     }
+    // }
+    // let obj = {a: 1};
+    // let obj2 = deepCopy(obj);
+    // obj.fun = () => {}
+    // console.log(obj,obj2,'xx')
+    Promise.resolve(1)
+    .then(()=>{
+        return Promise.resolve(3)
+    })
+    .then(Promise.resolve(3))
+    .then((Res)=>{
+        console.log(Res)
+    })
+</script>
+</html>
